@@ -22,6 +22,9 @@ layout: default
 
             var total_bitcoins_issued = total_number / 21000000 * 100;
             append_html += "<br>% of Bitcoins Issued: " + total_bitcoins_issued.toFixed(3) + "%";
+            
+            var bitcoins_remaining = 21000000 - total_number;
+            append_html += "<br>Bitcoins Left to Be Mined: " + bitcoins_remaining.toFixed(1);
 
             $("#calc-content-div").append(append_html);
         });
