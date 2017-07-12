@@ -9,6 +9,26 @@
 @import "variables";
 // Syntax highlighting @import is at the bottom of this file
 
+.thirty-day {
+    display: inline-block;
+    float: left;
+    text-align: center;
+    width: 50%;
+}
+
+.sixty-day {
+    display: inline-block;
+    float: left;
+    text-align: center;
+    width: 50%;
+}
+
+.volatility .stat {
+    font-size: 6rem;
+    font-weight: 100;
+}
+
+
 /**************/
 /* BASE RULES */
 /**************/
@@ -300,26 +320,6 @@ footer {
 	a {
 		border: none;
 	}
-}
-
-.thirty-day {
-    display: inline-block;
-    float: left;
-    text-align: center;
-    width: 50%;
-}
-
-
-.sixty-day {
-    display: inline-block;
-    float: left;
-    text-align: center;
-    width: 50%;
-}
-
-.volatility .stat {
-    font-size: 6rem;
-    font-weight: 100;
 }
 
 
