@@ -11,8 +11,9 @@ layout: default
 <script>
     var height;
     jQuery(document).ready(function($){
-        $.getJSON("https://blockchain.info/latestblock", function( data ) {
-            var height = data.height;
+        $.getJSON("https://www.satochi.co/latest-block", function( data ) {
+            console.log(data);
+            var height = data;
             var total_number = 12.5 * (height - 472500) + 16406250;
             var append_html = "Total number of bitcoins in existence: " + total_number.toString();
 
