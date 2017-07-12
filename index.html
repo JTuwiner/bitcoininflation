@@ -15,7 +15,7 @@ layout: default
             console.log(data);
             var height = data;
             var total_number = 12.5 * (height - 472500) + 16406250;
-            var append_html = "<p class='volatility'>Total number of bitcoins in existence<br><span class='stat'>" + total_number.toString() + "</span></p>";
+            var append_html = "<p>Total number of bitcoins in existence<br><span class='stat'>" + total_number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
             var cur_inflation = 12.5 * 144 * 365.25 / total_number * 100;
             append_html += "<br>Current Inflation: " + cur_inflation.toFixed(3) + "%";
@@ -24,7 +24,9 @@ layout: default
             append_html += "<br>% of Bitcoins Issued: " + total_bitcoins_issued.toFixed(3) + "%";
             
             var bitcoins_remaining = 21000000 - total_number;
-            append_html += "<br>Bitcoins Left to Be Mined: " + bitcoins_remaining.toFixed(1);
+            append_html += "<br>Bitcoins Left to Be Mined: " + bitcoins_remaining.toFixed(1).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</span></p>";
+
+            console.log(append_html);
 
             $("#calc-content-div").append(append_html);
         });
