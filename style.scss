@@ -302,6 +302,21 @@ footer {
 	}
 }
 
+.thirty-day {
+    display: inline-block;
+    float: left;
+    text-align: center;
+    width: 50%;
+}
+
+
+.sixty-day {
+    display: inline-block;
+    float: left;
+    text-align: center;
+    width: 50%;
+}
+
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
 @import "highlights";
