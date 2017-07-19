@@ -107,18 +107,18 @@ permalink: "/calculation/"
                 jQuery("#chance").html(stringToTS(q));
 
                 uhr *= 12.5;
-                q = uhr.toFixed(8);
-                jQuery("#earned_btc_day").html(stringToTS(q));
+                //q = uhr.toFixed(8);
+                //jQuery("#earned_btc_day").html(stringToTS(q));
 
-                q = (uhr * price).toFixed(2);
-                jQuery("#earned_dollar_day").html(stringToTS(q));
+                //q = (uhr * price).toFixed(2);
+                //jQuery("#earned_dollar_day").html(stringToTS(q));
 
                 uhr *= 30;
-                q = uhr.toFixed(8);
-                jQuery("#earned_btc_month").html(stringToTS(q));
+                //q = uhr.toFixed(8);
+                //jQuery("#earned_btc_month").html(stringToTS(q));
 
-                q = (uhr * price).toFixed(2);
-                jQuery("#earned_dollar_month").html(stringToTS(q));
+                //q = (uhr * price).toFixed(2);
+                //jQuery("#earned_dollar_month").html(stringToTS(q));
 
                 uhr = getValueForYear(uhr);
                 q = uhr.toFixed(8);
@@ -126,6 +126,10 @@ permalink: "/calculation/"
 
                 q = (uhr * price).toFixed(2);
                 jQuery("#earned_dollar_year").html(stringToTS(q));
+                jQuery("#earned_btc_day").html(stringToTS((uhr/365).toFixed(8)));
+                jQuery("#earned_dollar_day").html(stringToTS((uhr/365*price).toFixed(8)));
+                jQuery("#earned_btc_month").html(stringToTS((uhr/12).toFixed(8)));
+                jQuery("#earned_dollar_month").html(stringToTS((uhr/12*price).toFixed(8)));
             }
         }
 
