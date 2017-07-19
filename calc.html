@@ -14,13 +14,18 @@ permalink: "/calculation/"
         </select>
     </p>
 
+    <p>
+        Bitcoin Price ($): 
+        <input id="bitcoin_price" class="input_box"> 
+    </p>
+
     <p>User % of Hash Rate: <sapn id="user_hash_rate" class="show_box">0</span></p>
 
     <p>Chance of user finding a block: <span id="chance" class="show_box">0</span></p>
 
-    <p>Estimated BTC earned per day at 12.5 BTC / block: <span id="earned_btc_day" class="show_box">0</span></p>
+    <p>Estimated earned per day at 12.5 BTC / block: <span id="earned_btc_day" class="show_box">0</span> BTC or in dollars $<span id="earned_dollar_day" class="show_box">0</span></p>
 
-    <p>Estimated BTC earned per month at 12.5 BTC / block: <span id="earned_btc_month" class="show_box">0</span></p>
+    <p>Estimated earned per month at 12.5 BTC / block: <span id="earned_btc_month" class="show_box">0</span> BTC or in $<span id="earned_dollar_month" class="show_box">0</span></p>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -35,14 +40,23 @@ permalink: "/calculation/"
             $("#cur_hash_rate").append(append_html);
         });
 
+        $.getJSON("https://www.satochi.co/latest", function( data ) {
+            //console.log(data.Price);
+            b = data.Price.toString().split(".");
+            b[0] = b[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+            c = b.join('.');
+            $("#bitcoin_price").val(c);
+        });
+
         var eventHandler = function() {
             //s = parseFloat(jQuery("#hash_rate").val().toString().replace(/\,/g,''));
             //jQuery("#hash_rate").val(s);
             var unit = 1;
             var sel_index = document.getElementById("unit_select").selectedIndex;
-            if (document.getElementById("unit_select").options[sel_index].value == "t") unit = 1000;
+            if (document.getElementById("unit_select").options[sel_index].value == "t") unit = 100;
 
             s = jQuery("#hash_rate").val().toString().replace(/\,/g,'');
+            price = jQuery("#bitcoin_price").val().toString().replace(/\,/g,'');
             b = s.toString().split(".");
             b[0] = b[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
             c = b.join('.');
@@ -72,11 +86,23 @@ permalink: "/calculation/"
                 p = a.join('.');
                 jQuery("#earned_btc_day").html(p);
 
+                q = (uhr * 144 * 12.5 * price).toFixed(10);
+                a = q.split(".");
+                a[0] = a[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+                p = a.join('.');
+                jQuery("#earned_dollar_day").html(p);
+
                 q = (uhr * 144 * 12.5 * 30).toFixed(10);
                 a = q.split(".");
                 a[0] = a[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
                 p = a.join('.');
                 jQuery("#earned_btc_month").html(p);
+
+                q = (uhr * 144 * 12.5 * 30 * price).toFixed(10);
+                a = q.split(".");
+                a[0] = a[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+                p = a.join('.');
+                jQuery("#earned_dollar_month").html(p);
             }
         }
 
