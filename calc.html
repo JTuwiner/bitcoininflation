@@ -33,20 +33,23 @@ permalink: "/calculation/"
 
     <p>Chance of user finding a block: <span id="chance" class="show_box">0</span></p>
 
+    <div>
+        <div>Estimated earned per day at 12.5 BTC / block: <span id="earned_btc_day" class="show_box">0</span> BTC or in dollars $<span id="earned_dollar_day" class="show_box">0</span></div>
+        <div>Electricity costs per day: $<sapn id="ele_costs_day" class="show_box">0</span></div>
+        <div>Profit Per day: <span id="d_day" class="show_box">0</span></div>
+    </div>
     <p>
-        Estimated earned per day at 12.5 BTC / block: <span id="earned_btc_day" class="show_box">0</span> BTC or in dollars $<span id="earned_dollar_day" class="show_box">0</span>
-        <br>Electricity costs per day: $<sapn id="ele_costs_day" class="show_box">0</span>
-    </p>
-
+    <div>
+        <div>Estimated earned per month at 12.5 BTC / block: <span id="earned_btc_month" class="show_box">0</span> BTC or in $<span id="earned_dollar_month" class="show_box">0</span></div>
+        <div>Electricity costs per month: $<sapn id="ele_costs_month" class="show_box">$0</span></div>
+        <div>Profit Per month: <span id="d_month" class="show_box">0</span></div>
+    </div>
     <p>
-        Estimated earned per month at 12.5 BTC / block: <span id="earned_btc_month" class="show_box">0</span> BTC or in $<span id="earned_dollar_month" class="show_box">0</span>
-        <br>Electricity costs per month: $<sapn id="ele_costs_month" class="show_box">0</span>
-    </p>
-
-    <p>
-        Estimated earned per year at 12.5 BTC / block: <span id="earned_btc_year" class="show_box">0</span> BTC or in $<span id="earned_dollar_year" class="show_box">0</span>
-        <br>Electricity costs per year: $<sapn id="ele_costs_year" class="show_box">0</span>
-    </p>
+    <div>
+        <div>Estimated earned per year at 12.5 BTC / block: <span id="earned_btc_year" class="show_box">0</span> BTC or in $<span id="earned_dollar_year" class="show_box">0</span></div>
+        <div>Electricity costs per year: $<sapn id="ele_costs_year" class="show_box">0</span></div>
+        <div>Profit Per year: <span id="d_year" class="show_box">0</span></div>
+    </div>
 
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -55,6 +58,13 @@ permalink: "/calculation/"
     var height;
     jQuery(document).ready(function($){
         var hashrate;
+        var earned_day = 0;
+        var earned_month = 0;
+        var earned_year = 0;
+        var ele_day = 0;
+        var ele_month = 0;
+        var ele_year = 0;
+
         $.getJSON("https://www.satochi.co/latest-hashrate", function( data ) {
             //console.log(data);
             hashrate = data;
@@ -75,6 +85,33 @@ permalink: "/calculation/"
             b[0] = b[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
             c = b.join('.');
             return c;
+        }
+
+        function getValueForYear(v) {
+            var t = 0;
+            for (i = 0; i < 12; i ++) {
+                v *= 0.8732584107;
+                t += v;
+            }
+            return t;
+        }
+
+        function getAppendHTML(v1, v2)
+        {
+            var append_html = "<span class='";
+            if (v1 >= v2) {
+                append_html += "positive-earning'>+$" + stringToTS((v1 - v2).toFixed(2)) + "</span>";
+            } else {
+                append_html += "negative-earning'>-$" + stringToTS((v2 - v1).toFixed(2)) + "</span>";
+            }
+            return append_html;
+        }
+
+        function setDValue_Style() {
+            jQuery("#d_day").html(getAppendHTML(earned_day, ele_day));
+            jQuery("#d_month").html(getAppendHTML(earned_month, ele_month));
+            jQuery("#d_year").html(getAppendHTML(earned_year, ele_year));
+            console.log(ele_day);
         }
 
         var eventCalc1Handler = function() {
@@ -98,48 +135,38 @@ permalink: "/calculation/"
                 jQuery("#earned_btc_month").html("0");
                 jQuery("#earned_dollar_day").html("0");
                 jQuery("#earned_dollar_month").html("0");
+                earned_day = 0;
+                earned_month = 0;
+                earned_month = 0;
             } else {
                 q = uhr.toFixed(8);
                 jQuery("#user_hash_rate").html(stringToTS(q));
 
                 uhr *= 144;
-                q = uhr.toFixed(8);
-                jQuery("#chance").html(stringToTS(q));
+                jQuery("#chance").html(stringToTS(uhr.toFixed(8)));
 
                 uhr *= 12.5;
-                //q = uhr.toFixed(8);
-                //jQuery("#earned_btc_day").html(stringToTS(q));
-
-                //q = (uhr * price).toFixed(2);
-                //jQuery("#earned_dollar_day").html(stringToTS(q));
+                //jQuery("#earned_btc_day").html(stringToTS(uhr.toFixed(8)));
+                //jQuery("#earned_dollar_day").html(stringToTS((uhr * price).toFixed(2)));
 
                 uhr *= 30;
-                //q = uhr.toFixed(8);
-                //jQuery("#earned_btc_month").html(stringToTS(q));
-
-                //q = (uhr * price).toFixed(2);
-                //jQuery("#earned_dollar_month").html(stringToTS(q));
+                //jQuery("#earned_btc_month").html(stringToTS(uhr.toFixed(8)));
+                //jQuery("#earned_dollar_month").html(stringToTS((uhr * price).toFixed(2)));
 
                 uhr = getValueForYear(uhr);
-                q = uhr.toFixed(8);
-                jQuery("#earned_btc_year").html(stringToTS(q));
+                earned_day = uhr / 365 * price;
+                earned_month = uhr / 12 * price;
+                earned_year = uhr * price;
 
-                q = (uhr * price).toFixed(2);
-                jQuery("#earned_dollar_year").html(stringToTS(q));
+                jQuery("#earned_btc_year").html(stringToTS(uhr.toFixed(8)));
+                jQuery("#earned_dollar_year").html(stringToTS(earned_year.toFixed(2)));
                 jQuery("#earned_btc_day").html(stringToTS((uhr/365).toFixed(8)));
-                jQuery("#earned_dollar_day").html(stringToTS((uhr/365*price).toFixed(8)));
+                jQuery("#earned_dollar_day").html(stringToTS(earned_day.toFixed(2)));
                 jQuery("#earned_btc_month").html(stringToTS((uhr/12).toFixed(8)));
-                jQuery("#earned_dollar_month").html(stringToTS((uhr/12*price).toFixed(8)));
+                jQuery("#earned_dollar_month").html(stringToTS(earned_month.toFixed(2)));
             }
-        }
 
-        function getValueForYear(v) {
-            var t = 0;
-            for (i = 0; i < 12; i ++) {
-                v *= 0.8732584107;
-                t += v;
-            }
-            return t;
+            setDValue_Style();
         }
 
         var eventCalc2Hander = function() {
@@ -156,6 +183,9 @@ permalink: "/calculation/"
                 jQuery("#ele_costs_day").html("0");
                 jQuery("#ele_costs_month").html("0");
                 jQuery("#ele_costs_year").html("0");
+                ele_day = 0;
+                ele_month = 0;
+                ele_year = 0;
             } else {
                 q = ec.toFixed(2);
                 jQuery("#ele_costs_day").html(stringToTS(q));
@@ -167,7 +197,13 @@ permalink: "/calculation/"
                 ec *= 12;
                 q = ec.toFixed(2);
                 jQuery("#ele_costs_year").html(stringToTS(q));
+
+                ele_year = ec;
+                ele_month = ec / 12;
+                ele_day = ec / 12 / 30;
             }
+
+            setDValue_Style()
         }
 
         jQuery("#hash_rate").bind('input', eventCalc1Handler);
