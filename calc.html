@@ -5,13 +5,22 @@ permalink: "/calculation/"
 
 <div id="calc-content-div" class="calculation_area">
     Current Hash Rate: <span id="cur_hash_rate"></span>
-    <p>Hash Rate: <input id="hash_rate" class="input_box"> GH/s</p>
+    <p>
+        Hash Rate: 
+        <input id="hash_rate" class="input_box"> 
+        <select id="unit_select" class="select_box">
+            <option value="g">GH/s</option>
+            <option value="t">TH/s</option>
+        </select>
+    </p>
 
     <p>User % of Hash Rate: <sapn id="user_hash_rate" class="show_box">0</span></p>
 
     <p>Chance of user finding a block: <span id="chance" class="show_box">0</span></p>
 
-    <p>Estimated BTC earned per day at 12.5 BTC / block: <span id="earned_btc" class="show_box">0</span></p>
+    <p>Estimated BTC earned per day at 12.5 BTC / block: <span id="earned_btc_day" class="show_box">0</span></p>
+
+    <p>Estimated BTC earned per month at 12.5 BTC / block: <span id="earned_btc_month" class="show_box">0</span></p>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -20,27 +29,30 @@ permalink: "/calculation/"
     jQuery(document).ready(function($){
         var hashrate;
         $.getJSON("https://www.satochi.co/latest-hashrate", function( data ) {
-            console.log(data);
+            //console.log(data);
             hashrate = data;
             var append_html = hashrate.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             $("#cur_hash_rate").append(append_html);
         });
 
-        jQuery("#hash_rate").bind('input',function(){
+        var eventHandler = function() {
             //s = parseFloat(jQuery("#hash_rate").val().toString().replace(/\,/g,''));
             //jQuery("#hash_rate").val(s);
-            s = jQuery("#hash_rate").val().toString().replace(/\,/g,'');
+            var unit = 1;
+            var sel_index = document.getElementById("unit_select").selectedIndex;
+            if (document.getElementById("unit_select").options[sel_index].value == "t") unit = 100;
 
+            s = jQuery("#hash_rate").val().toString().replace(/\,/g,'');
             b = s.toString().split(".");
             b[0] = b[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
             c = b.join('.');
             jQuery("#hash_rate").val(c);
-
-            uhr = s / hashrate;
+            uhr = s / hashrate * unit;
             if (isNaN(uhr)) {
                 jQuery("#user_hash_rate").html("0");
                 jQuery("#chance").html("0");
-                jQuery("#earned_btc").html("0");
+                jQuery("#earned_btc_day").html("0");
+                jQuery("#earned_btc_month").html("0");
             } else {
                 q = uhr.toFixed(10);
                 a = q.split(".");
@@ -58,8 +70,17 @@ permalink: "/calculation/"
                 a = q.split(".");
                 a[0] = a[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
                 p = a.join('.');
-                jQuery("#earned_btc").html(p);
+                jQuery("#earned_btc_day").html(p);
+
+                q = (uhr * 144 * 12.5 * 30).toFixed(10);
+                a = q.split(".");
+                a[0] = a[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+                p = a.join('.');
+                jQuery("#earned_btc_month").html(p);
             }
-        });
+        }
+
+        jQuery("#hash_rate").bind('input', eventHandler);
+        jQuery("#unit_select").bind('change', eventHandler);
     });
 </script>
