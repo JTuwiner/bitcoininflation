@@ -33,11 +33,21 @@ permalink: "/calculation/"
 
     <p>Chance of user finding a block: <span id="chance" class="show_box">0</span></p>
 
-    <p>Estimated earned per day at 12.5 BTC / block: <span id="earned_btc_day" class="show_box">0</span> BTC or in dollars $<span id="earned_dollar_day" class="show_box">0</span></p>
+    <p>
+        Estimated earned per day at 12.5 BTC / block: <span id="earned_btc_day" class="show_box">0</span> BTC or in dollars $<span id="earned_dollar_day" class="show_box">0</span>
+        <br>Electricity costs per day: $<sapn id="ele_costs_day" class="show_box">0</span>
+    </p>
 
-    <p>Estimated earned per month at 12.5 BTC / block: <span id="earned_btc_month" class="show_box">0</span> BTC or in $<span id="earned_dollar_month" class="show_box">0</span></p>
+    <p>
+        Estimated earned per month at 12.5 BTC / block: <span id="earned_btc_month" class="show_box">0</span> BTC or in $<span id="earned_dollar_month" class="show_box">0</span>
+        <br>Electricity costs per month: $<sapn id="ele_costs_month" class="show_box">0</span>
+    </p>
 
-    <p>Electricity costs per day: <sapn id="ele_costs" class="show_box">0</span></p>
+    <p>
+        Estimated earned per year at 12.5 BTC / block: <span id="earned_btc_year" class="show_box">0</span> BTC or in $<span id="earned_dollar_year" class="show_box">0</span>
+        <br>Electricity costs per year: $<sapn id="ele_costs_year" class="show_box">0</span>
+    </p>
+
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -92,20 +102,30 @@ permalink: "/calculation/"
                 q = uhr.toFixed(8);
                 jQuery("#user_hash_rate").html(stringToTS(q));
 
-                q = (uhr * 144).toFixed(8);
+                uhr *= 144;
+                q = uhr.toFixed(8);
                 jQuery("#chance").html(stringToTS(q));
 
-                q = (uhr * 144 * 12.5).toFixed(8);
+                uhr *= 12.5;
+                q = uhr.toFixed(8);
                 jQuery("#earned_btc_day").html(stringToTS(q));
 
-                q = (uhr * 144 * 12.5 * price).toFixed(2);
+                q = (uhr * price).toFixed(2);
                 jQuery("#earned_dollar_day").html(stringToTS(q));
 
-                q = (uhr * 144 * 12.5 * 30).toFixed(8);
+                uhr *= 30;
+                q = uhr.toFixed(8);
                 jQuery("#earned_btc_month").html(stringToTS(q));
 
-                q = (uhr * 144 * 12.5 * 30 * price).toFixed(2);
+                q = (uhr * price).toFixed(2);
                 jQuery("#earned_dollar_month").html(stringToTS(q));
+
+                uhr *= 12;
+                q = uhr.toFixed(8);
+                jQuery("#earned_btc_year").html(stringToTS(q));
+
+                q = (uhr * price).toFixed(2);
+                jQuery("#earned_dollar_year").html(stringToTS(q));
             }
         }
 
@@ -120,10 +140,20 @@ permalink: "/calculation/"
 
             ec = p / 1000 * 24 * c;
             if (isNaN(ec)) {
-                jQuery("#ele_costs").html("0");
+                jQuery("#ele_costs_day").html("0");
+                jQuery("#ele_costs_month").html("0");
+                jQuery("#ele_costs_year").html("0");
             } else {
                 q = ec.toFixed(2);
-                jQuery("#ele_costs").html(stringToTS(q));
+                jQuery("#ele_costs_day").html(stringToTS(q));
+
+                ec *= 30;
+                q = ec.toFixed(2);
+                jQuery("#ele_costs_month").html(stringToTS(q));
+
+                ec *= 12;
+                q = ec.toFixed(2);
+                jQuery("#ele_costs_year").html(stringToTS(q));
             }
         }
 
