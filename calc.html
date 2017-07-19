@@ -1,0 +1,65 @@
+---
+layout: page
+permalink: "/calculation/"
+---
+
+<div id="calc-content-div" class="calculation_area">
+    Current Hash Rate: <span id="cur_hash_rate"></span>
+    <p>Hash Rate: <input id="hash_rate" class="input_box"> GH/s</p>
+
+    <p>User % of Hash Rate: <sapn id="user_hash_rate" class="show_box">0</span></p>
+
+    <p>chance of user finding a block: <span id="chance" class="show_box">0</span></p>
+
+    <p>12.5 BTC per block: <span id="earned_btc" class="show_box">0</span></p>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+    var height;
+    jQuery(document).ready(function($){
+        var hashrate;
+        $.getJSON("https://www.satochi.co/latest-hashrate", function( data ) {
+            console.log(data);
+            hashrate = data;
+            var append_html = hashrate.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            $("#cur_hash_rate").append(append_html);
+        });
+
+        jQuery("#hash_rate").bind('input',function(){
+            //s = parseFloat(jQuery("#hash_rate").val().toString().replace(/\,/g,''));
+            //jQuery("#hash_rate").val(s);
+            s = jQuery("#hash_rate").val().toString().replace(/\,/g,'');
+
+            b = s.toString().split(".");
+            b[0] = b[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+            c = b.join('.');
+            jQuery("#hash_rate").val(c);
+
+            uhr = s / hashrate;
+            if (isNaN(uhr)) {
+                jQuery("#user_hash_rate").html("0");
+                jQuery("#chance").html("0");
+                jQuery("#earned_btc").html("0");
+            } else {
+                q = uhr.toFixed(10);
+                a = q.split(".");
+                a[0] = a[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+                p = a.join('.');
+                jQuery("#user_hash_rate").html(p);
+
+                q = (uhr * 144).toFixed(10);
+                a = q.split(".");
+                a[0] = a[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+                p = a.join('.');
+                jQuery("#chance").html(p);
+
+                q = (uhr * 144 * 12.5).toFixed(10);
+                a = q.split(".");
+                a[0] = a[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+                p = a.join('.');
+                jQuery("#earned_btc").html(p);
+            }
+        });
+    });
+</script>
