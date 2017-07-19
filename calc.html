@@ -33,22 +33,22 @@ permalink: "/calculation/"
 
     <p>Chance of user finding a block: <span id="chance" class="show_box">0</span></p>
 
-    <div>
-        <div>Estimated earned per day at 12.5 BTC / block: <span id="earned_btc_day" class="show_box">0</span> BTC or in dollars $<span id="earned_dollar_day" class="show_box">0</span></div>
-        <div>Electricity costs per day: $<sapn id="ele_costs_day" class="show_box">0</span></div>
-        <div>Profit Per day: <span id="d_day" class="show_box">0</span></div>
+    <div class="positive-earning">
+        <div class="earnings">Estimated earned per day at 12.5 BTC / block: <span id="earned_btc_day" class="show_box">0</span> BTC or in dollars $<span id="earned_dollar_day" class="show_box">0</span></div>
+        <div class="electricity">Electricity costs per day: $<sapn id="ele_costs_day" class="show_box">0</span></div>
+        <div class="profit">Profit Per day: <span id="d_day" class="show_box">0</span></div>
     </div>
     <p>
-    <div>
-        <div>Estimated earned per month at 12.5 BTC / block: <span id="earned_btc_month" class="show_box">0</span> BTC or in $<span id="earned_dollar_month" class="show_box">0</span></div>
-        <div>Electricity costs per month: $<sapn id="ele_costs_month" class="show_box">$0</span></div>
+    <div class="positive-earning">
+        <div class="earnings">Estimated earned per month at 12.5 BTC / block: <span id="earned_btc_month" class="show_box">0</span> BTC or in $<span id="earned_dollar_month" class="show_box">0</span></div>
+        <div class="electricity">Electricity costs per month: $<sapn id="ele_costs_month" class="show_box">$0</span></div>
         <div>Profit Per month: <span id="d_month" class="show_box">0</span></div>
     </div>
     <p>
-    <div>
-        <div>Estimated earned per year at 12.5 BTC / block: <span id="earned_btc_year" class="show_box">0</span> BTC or in $<span id="earned_dollar_year" class="show_box">0</span></div>
-        <div>Electricity costs per year: $<sapn id="ele_costs_year" class="show_box">0</span></div>
-        <div>Profit Per year: <span id="d_year" class="show_box">0</span></div>
+    <div class="positive-earning">
+        <div class="earnings">Estimated earned per year at 12.5 BTC / block: <span id="earned_btc_year" class="show_box">0</span> BTC or in $<span id="earned_dollar_year" class="show_box">0</span></div>
+        <div class="electricity">Electricity costs per year: $<sapn id="ele_costs_year" class="show_box">0</span></div>
+        <div class="profit">Profit Per year: <span id="d_year" class="show_box">0</span></div>
     </div>
 
 </div>
@@ -98,11 +98,13 @@ permalink: "/calculation/"
 
         function getAppendHTML(v1, v2)
         {
-            var append_html = "<span class='";
+            var append_html = "";
             if (v1 >= v2) {
-                append_html += "positive-earning'>+$" + stringToTS((v1 - v2).toFixed(2)) + "</span>";
+                $(".negative-earning").attr('class', 'positive-earning');
+                append_html += "+$" + stringToTS((v1 - v2).toFixed(2));
             } else {
-                append_html += "negative-earning'>-$" + stringToTS((v2 - v1).toFixed(2)) + "</span>";
+                $(".positive-earning").attr('class', 'negative-earning');
+                append_html += "-$" + stringToTS((v2 - v1).toFixed(2));
             }
             return append_html;
         }
@@ -158,11 +160,11 @@ permalink: "/calculation/"
                 earned_month = uhr / 12 * price;
                 earned_year = uhr * price;
 
-                jQuery("#earned_btc_year").html(stringToTS(uhr.toFixed(8)));
+                jQuery("#earned_btc_year").html(stringToTS((uhr > 0.01) ? uhr.toFixed(3) : uhr.toFixed(5)));
                 jQuery("#earned_dollar_year").html(stringToTS(earned_year.toFixed(2)));
-                jQuery("#earned_btc_day").html(stringToTS((uhr/365).toFixed(8)));
+                jQuery("#earned_btc_day").html(stringToTS(((uhr/365) > 0.01) ? (uhr/365).toFixed(3) : (uhr/365).toFixed(5)));
                 jQuery("#earned_dollar_day").html(stringToTS(earned_day.toFixed(2)));
-                jQuery("#earned_btc_month").html(stringToTS((uhr/12).toFixed(8)));
+                jQuery("#earned_btc_month").html(stringToTS(((uhr/12) > 0.01) ? (uhr/12).toFixed(3) : (uhr/12).toFixed(5)));
                 jQuery("#earned_dollar_month").html(stringToTS(earned_month.toFixed(2)));
             }
 
