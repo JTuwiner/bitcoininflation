@@ -82,7 +82,7 @@ permalink: "/calculation/"
             //jQuery("#hash_rate").val(s);
             var unit = 1;
             var sel_index = document.getElementById("unit_select").selectedIndex;
-            if (document.getElementById("unit_select").options[sel_index].value == "t") unit = 100;
+            if (document.getElementById("unit_select").options[sel_index].value == "t") unit = 1000;
 
             s = jQuery("#hash_rate").val().toString().replace(/\,/g,'');
             jQuery("#hash_rate").val(stringToTS(s));
