@@ -67,38 +67,40 @@ permalink: "/calculation/"
                 jQuery("#chance").html("0");
                 jQuery("#earned_btc_day").html("0");
                 jQuery("#earned_btc_month").html("0");
+                jQuery("#earned_dollar_day").html("0");
+                jQuery("#earned_dollar_month").html("0");
             } else {
-                q = uhr.toFixed(10);
+                q = uhr.toFixed(8);
                 a = q.split(".");
                 a[0] = a[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
                 p = a.join('.');
                 jQuery("#user_hash_rate").html(p);
 
-                q = (uhr * 144).toFixed(10);
+                q = (uhr * 144).toFixed(8);
                 a = q.split(".");
                 a[0] = a[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
                 p = a.join('.');
                 jQuery("#chance").html(p);
 
-                q = (uhr * 144 * 12.5).toFixed(10);
+                q = (uhr * 144 * 12.5).toFixed(8);
                 a = q.split(".");
                 a[0] = a[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
                 p = a.join('.');
                 jQuery("#earned_btc_day").html(p);
 
-                q = (uhr * 144 * 12.5 * price).toFixed(10);
+                q = (uhr * 144 * 12.5 * price).toFixed(8);
                 a = q.split(".");
                 a[0] = a[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
                 p = a.join('.');
                 jQuery("#earned_dollar_day").html(p);
 
-                q = (uhr * 144 * 12.5 * 30).toFixed(10);
+                q = (uhr * 144 * 12.5 * 30).toFixed(8);
                 a = q.split(".");
                 a[0] = a[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
                 p = a.join('.');
                 jQuery("#earned_btc_month").html(p);
 
-                q = (uhr * 144 * 12.5 * 30 * price).toFixed(10);
+                q = (uhr * 144 * 12.5 * 30 * price).toFixed(8);
                 a = q.split(".");
                 a[0] = a[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
                 p = a.join('.');
