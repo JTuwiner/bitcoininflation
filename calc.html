@@ -19,6 +19,16 @@ permalink: "/calculation/"
         <input id="bitcoin_price" class="input_box"> 
     </p>
 
+    <p>
+        Power consumption (watts): 
+        <input id="power_consumption" class="input_box"> 
+    </p>
+
+    <p>
+        Cost per KW/h in $: 
+        <input id="cost_kw" class="input_box"> 
+    </p>
+
     <p>User % of Hash Rate: <sapn id="user_hash_rate" class="show_box">0</span></p>
 
     <p>Chance of user finding a block: <span id="chance" class="show_box">0</span></p>
@@ -26,6 +36,8 @@ permalink: "/calculation/"
     <p>Estimated earned per day at 12.5 BTC / block: <span id="earned_btc_day" class="show_box">0</span> BTC or in dollars $<span id="earned_dollar_day" class="show_box">0</span></p>
 
     <p>Estimated earned per month at 12.5 BTC / block: <span id="earned_btc_month" class="show_box">0</span> BTC or in $<span id="earned_dollar_month" class="show_box">0</span></p>
+
+    <p>Electricity costs per day: <sapn id="ele_costs" class="show_box">0</span></p>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -48,7 +60,14 @@ permalink: "/calculation/"
             $("#bitcoin_price").val(c);
         });
 
-        var eventHandler = function() {
+        function stringToTS(s) {
+            b = s.toString().split(".");
+            b[0] = b[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+            c = b.join('.');
+            return c;
+        }
+
+        var eventCalc1Handler = function() {
             //s = parseFloat(jQuery("#hash_rate").val().toString().replace(/\,/g,''));
             //jQuery("#hash_rate").val(s);
             var unit = 1;
@@ -56,11 +75,11 @@ permalink: "/calculation/"
             if (document.getElementById("unit_select").options[sel_index].value == "t") unit = 100;
 
             s = jQuery("#hash_rate").val().toString().replace(/\,/g,'');
+            jQuery("#hash_rate").val(stringToTS(s));
+
             price = jQuery("#bitcoin_price").val().toString().replace(/\,/g,'');
-            b = s.toString().split(".");
-            b[0] = b[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
-            c = b.join('.');
-            jQuery("#hash_rate").val(c);
+            jQuery("#bitcoin_price").val(stringToTS(price));
+
             uhr = s / hashrate * unit;
             if (isNaN(uhr)) {
                 jQuery("#user_hash_rate").html("0");
@@ -71,45 +90,48 @@ permalink: "/calculation/"
                 jQuery("#earned_dollar_month").html("0");
             } else {
                 q = uhr.toFixed(8);
-                a = q.split(".");
-                a[0] = a[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
-                p = a.join('.');
-                jQuery("#user_hash_rate").html(p);
+                jQuery("#user_hash_rate").html(stringToTS(q));
 
                 q = (uhr * 144).toFixed(8);
-                a = q.split(".");
-                a[0] = a[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
-                p = a.join('.');
-                jQuery("#chance").html(p);
+                jQuery("#chance").html(stringToTS(q));
 
                 q = (uhr * 144 * 12.5).toFixed(8);
-                a = q.split(".");
-                a[0] = a[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
-                p = a.join('.');
-                jQuery("#earned_btc_day").html(p);
+                jQuery("#earned_btc_day").html(stringToTS(q));
 
-                q = (uhr * 144 * 12.5 * price).toFixed(8);
-                a = q.split(".");
-                a[0] = a[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
-                p = a.join('.');
-                jQuery("#earned_dollar_day").html(p);
+                q = (uhr * 144 * 12.5 * price).toFixed(2);
+                jQuery("#earned_dollar_day").html(stringToTS(q));
 
                 q = (uhr * 144 * 12.5 * 30).toFixed(8);
-                a = q.split(".");
-                a[0] = a[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
-                p = a.join('.');
-                jQuery("#earned_btc_month").html(p);
+                jQuery("#earned_btc_month").html(stringToTS(q));
 
-                q = (uhr * 144 * 12.5 * 30 * price).toFixed(8);
-                a = q.split(".");
-                a[0] = a[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
-                p = a.join('.');
-                jQuery("#earned_dollar_month").html(p);
+                q = (uhr * 144 * 12.5 * 30 * price).toFixed(2);
+                jQuery("#earned_dollar_month").html(stringToTS(q));
             }
         }
 
-        jQuery("#hash_rate").bind('input', eventHandler);
-        jQuery("#bitcoin_price").bind('input', eventHandler);
-        jQuery("#unit_select").bind('change', eventHandler);
+        var eventCalc2Hander = function() {
+            //s = parseFloat(jQuery("#hash_rate").val().toString().replace(/\,/g,''));
+            //jQuery("#hash_rate").val(s);
+            p = jQuery("#power_consumption").val().toString().replace(/\,/g,'');
+            jQuery("#power_consumption").val(stringToTS(p));
+
+            c = jQuery("#cost_kw").val().toString().replace(/\,/g,'');
+            jQuery("#cost_kw").val(stringToTS(c));
+
+            ec = p / 1000 * 24 * c;
+            if (isNaN(ec)) {
+                jQuery("#ele_costs").html("0");
+            } else {
+                q = ec.toFixed(2);
+                jQuery("#ele_costs").html(stringToTS(q));
+            }
+        }
+
+        jQuery("#hash_rate").bind('input', eventCalc1Handler);
+        jQuery("#bitcoin_price").bind('input', eventCalc1Handler);
+        jQuery("#unit_select").bind('change', eventCalc1Handler);
+
+        jQuery("#power_consumption").bind('input', eventCalc2Hander);
+        jQuery("#cost_kw").bind('input', eventCalc2Hander);
     });
 </script>
