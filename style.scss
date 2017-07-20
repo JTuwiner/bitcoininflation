@@ -357,10 +357,13 @@ footer {
 
 .negative-earning, .positive-earning {
 	width: 100%;
+	clear: both;
+	margin-bottom: 85px;
 }
 
 .earnings, .electricity, .profit {
 	width: 33%;
+	float: left;
 	font-size: 27px;
 }
 
@@ -370,6 +373,13 @@ footer {
 
 .positive-earning .electricity, .positive-earning .profit, .positive-earning .earnings {
 	color: #5cb85c;
+}
+
+.earned_btc_month, .earned_btc_day, .earned_btc_year {
+	&:after {
+		content: "BTC";
+		color: #000;
+	}
 }
 
 .data-label {
