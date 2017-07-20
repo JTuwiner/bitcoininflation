@@ -375,11 +375,9 @@ footer {
 	color: #5cb85c;
 }
 
-.earned_btc_month, .earned_btc_day, .earned_btc_year {
-	&:after {
+.earned_btc_month::after, .earned_btc_day::after, .earned_btc_year::after {
 		content: "BTC";
 		color: #000;
-	}
 }
 
 .data-label {
