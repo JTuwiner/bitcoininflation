@@ -333,6 +333,19 @@ footer {
 	clear: both;
 }
 
+.half-section-calc input {
+	font-family: Proxima;
+	width: 100%;
+	padding: 5px 3px;
+}
+
+.half-section-calc #hash_rate {
+	width: 80%;
+}
+
+.half-section-calc #unit_select {
+	width: 20%;
+}
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
