@@ -375,6 +375,9 @@ footer {
     
 }
 
+.earnings {
+	border-radius: 1px solid #ccc;
+}
 
 .earnings, .electricity, .profit {
     float: left;
@@ -385,7 +388,7 @@ footer {
 
 .negative-earning .electricity, .negative-earning .profit, .negative-earning .earnings {
 	color: #d9534f;
-	text-align: center;
+	text-align: center !important;
 }
 
 .positive-earning .electricity, .positive-earning .profit, .positive-earning .earnings {
