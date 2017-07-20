@@ -356,23 +356,48 @@ footer {
 }
 
 .negative-earning, .positive-earning {
-	width: 100%;
-	clear: both;
-	margin-bottom: 85px;
+    display: block;
+    float: left;
+    margin-bottom: -1px;
+    margin-top: 1px;
+    padding-bottom: 10px;
+    padding-top: 0;
+    width: 100%;
+    
+    .profit {
+    	color: #fff !important;
+		text-align: left !important;
+		
+		    .data-label {
+				color: #fff !important;
+				}
+    }
+    
 }
 
 .earnings, .electricity, .profit {
-	width: 33%;
-	float: left;
-	font-size: 27px;
+    float: left;
+    font-size: 27px;
+    padding: 25px 10px;
+    width: 33.3%;
 }
 
 .negative-earning .electricity, .negative-earning .profit, .negative-earning .earnings {
 	color: #d9534f;
+	text-align: right;
 }
 
 .positive-earning .electricity, .positive-earning .profit, .positive-earning .earnings {
-	color: #5cb85c;
+    color: #5cb85c;
+    text-align: right;
+}
+
+.positive-earning .profit {
+    background: #5cb85c none repeat scroll 0 0;
+}
+
+.negative-earning .profit {
+    background: #d9534f none repeat scroll 0 0;
 }
 
 .earned_btc_month::after, .earned_btc_day::after, .earned_btc_year::after {
