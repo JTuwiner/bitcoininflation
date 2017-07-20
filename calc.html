@@ -43,7 +43,7 @@ permalink: "/calculation/"
     	<div class="profit"><span id="d_month" class="show_box">0</span> <br><span class="data-label">Profit / month</span></div>
         <div class="earnings">$<span id="earned_dollar_month" class="show_box">0</span><br><span class="data-label">Mined per month</span></div>
         <div class="earnings"><span id="earned_btc_month" class="show_box">0</span> BTC<br><span class="data-label">Mined per month</span></div>
-        <div class="electricity">$<span id="ele_costs_month" class="show_box">$0</span><br><span class="data-label">Electricity costs / month</span></div>
+        <div class="electricity">$<span id="ele_costs_month" class="show_box">0</span><br><span class="data-label">Electricity costs / month</span></div>
     </div>
     
     <div class="positive-earning">
@@ -87,7 +87,7 @@ permalink: "/calculation/"
 
         $.getJSON("https://www.satochi.co/latest", function( data ) {
             //console.log(data.Price);
-            b = data.Price.toString().split(".");
+            b = data.Price.toFixed(2).split(".");
             b[0] = b[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
             c = b.join('.');
             $("#bitcoin_price").val(c);
@@ -173,12 +173,15 @@ permalink: "/calculation/"
                 earned_month = uhr / 12 * price;
                 earned_year = uhr * price;
 
-                jQuery("#earned_btc_year").html(stringToTS((uhr > 0.01) ? uhr.toFixed(3) : uhr.toFixed(5)));
+                jQuery("#earned_btc_year").html(stringToTS(uhr.toFixed(3)));
                 jQuery("#earned_dollar_year").html(stringToTS(earned_year.toFixed(2)));
-                jQuery("#earned_btc_day").html(stringToTS(((uhr/365) > 0.01) ? (uhr/365).toFixed(3) : (uhr/365).toFixed(5)));
+                jQuery("#earned_btc_day").html(stringToTS((uhr/365).toFixed(3)));
                 jQuery("#earned_dollar_day").html(stringToTS(earned_day.toFixed(2)));
-                jQuery("#earned_btc_month").html(stringToTS(((uhr/12) > 0.01) ? (uhr/12).toFixed(3) : (uhr/12).toFixed(5)));
+                jQuery("#earned_btc_month").html(stringToTS((uhr/12).toFixed(3)));
                 jQuery("#earned_dollar_month").html(stringToTS(earned_month.toFixed(2)));
+                //jQuery("#earned_btc_year").html(stringToTS((uhr > 0.01) ? uhr.toFixed(3) : uhr.toFixed(5)));
+                //jQuery("#earned_btc_day").html(stringToTS(((uhr/365) > 0.01) ? (uhr/365).toFixed(3) : (uhr/365).toFixed(5)));
+                //jQuery("#earned_btc_month").html(stringToTS(((uhr/12) > 0.01) ? (uhr/12).toFixed(3) : (uhr/12).toFixed(5)));
             }
 
             setDValue_Style();
