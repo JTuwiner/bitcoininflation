@@ -173,11 +173,11 @@ permalink: "/calculation/"
                 earned_month = uhr / 12 * price;
                 earned_year = uhr * price;
 
-                jQuery("#earned_btc_year").html(stringToTS(uhr.toFixed(3)));
+                jQuery("#earned_btc_year").html(stringToTS(uhr.toFixed(4)));
                 jQuery("#earned_dollar_year").html(stringToTS(earned_year.toFixed(2)));
-                jQuery("#earned_btc_day").html(stringToTS((uhr/365).toFixed(3)));
+                jQuery("#earned_btc_day").html(stringToTS((uhr/365).toFixed(4)));
                 jQuery("#earned_dollar_day").html(stringToTS(earned_day.toFixed(2)));
-                jQuery("#earned_btc_month").html(stringToTS((uhr/12).toFixed(3)));
+                jQuery("#earned_btc_month").html(stringToTS((uhr/12).toFixed(4)));
                 jQuery("#earned_dollar_month").html(stringToTS(earned_month.toFixed(2)));
                 //jQuery("#earned_btc_year").html(stringToTS((uhr > 0.01) ? uhr.toFixed(3) : uhr.toFixed(5)));
                 //jQuery("#earned_btc_day").html(stringToTS(((uhr/365) > 0.01) ? (uhr/365).toFixed(3) : (uhr/365).toFixed(5)));
