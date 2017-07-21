@@ -415,6 +415,18 @@ footer {
     margin-top: -3px;
 }
 
+@media (max-width: 760px) { 
+
+	#calc-content-div .negative-earning .profit, #calc-content-div .positive-earning .profit {
+		width: 100% !important;
+	}
+	
+	#calc-content-div .negative-earning .earnings, #calc-content-div .positive-earning .earnings, #calc-content-div .negative-earning .electricity, #calc-content-div .positive-earning .electricity {
+		width: 33% !important;
+	}
+
+}
+
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
 @import "highlights";
