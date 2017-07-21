@@ -429,7 +429,18 @@ footer {
 	    display: block !important;
 	    width: 94% !important;
 	}
+	
+	#calc-content-div .negative-earning, #calc-content-div .positive-earning {
+    	padding-top: 35px !important;
+	}
 
+}
+
+@media (max-width: 540px) { 
+	.entry #calc-content-div .negative-earning .earnings, .entry #calc-content-div .positive-earning .earnings, .entry #calc-content-div .negative-earning .electricity, .entry #calc-content-div .positive-earning .electricity {
+		width: 100% !important;
+		border-right: 0px solid #ccc !important;
+	}
 }
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
