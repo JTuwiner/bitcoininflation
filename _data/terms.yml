@@ -1,0 +1,9 @@
+- name: BIP
+  desc: Bitcoin Improvement proposals are BIPS proposed on the repo. 
+  
+- name: Mining Pool
+  desc: A mining pool is a group of miners that pools hash rate together to receive more frequent payouts. 
+  
+- name: Mining Hardware
+  desc: Mining hardware are powerful comptuers that miner for bitcoins. 
+      

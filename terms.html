@@ -1,0 +1,17 @@
+---
+layout: default
+permalink: /terms/
+---
+
+{% for term in site.data.terms %}
+
+
+<div class="term-wrapper">
+
+	<h2 class="term-name">{{ term.name }}</h2>
+	<div class="term-desc">{{ term.desc }}</div>
+
+</div>
+
+
+{% endfor %} 
