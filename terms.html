@@ -2,16 +2,35 @@
 layout: default
 permalink: /terms/
 ---
-
-{% for term in site.data.terms %}
-
-
-<div class="term-wrapper">
-
-	<h2 class="term-name">{{ term.name }}</h2>
-	<div class="term-desc">{{ term.desc }}</div>
-
+<div>
+  <input id="search_input">
+</div>
+<div id="blog_content">
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function($){
+    eventSearchHandler();
+    
+    function eventSearchHandler() {
+      $("#blog_content").html("");
+      
+      {% for term in site.data.terms %}
 
-{% endfor %} 
+        name = "{{ term.name }}";
+        s = $("#search_input").val();
+        if (s.length == 0 || name.toLowerCase().indexOf(s.toLowerCase()) >= 0) {
+
+          $("#blog_content").append("<div class='term-wrapper'>");
+            $("#blog_content").append("<h2 class='term-name'>" + "{{ term.name }}" + "</h2>");
+            $("#blog_content").append("<div class='term-desc'>" + "{{ term.desc }}" + "</div>");
+          $("#blog_content").append("</div>");
+
+        }
+
+      {% endfor %} 
+    }
+    $("#search_input").bind('input', eventSearchHandler);
+  });
+</script>
