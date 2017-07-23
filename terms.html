@@ -12,7 +12,7 @@ permalink: /terms/
 <script>
   $(document).ready(function($){
     eventSearchHandler();
-    
+
     function eventSearchHandler() {
       $("#blog_content").html("");
       
@@ -23,8 +23,8 @@ permalink: /terms/
         if (s.length == 0 || name.toLowerCase().indexOf(s.toLowerCase()) >= 0) {
 
           $("#blog_content").append("<div class='term-wrapper'>");
-            $("#blog_content").append("<h2 class='term-name'>" + "{{ term.name }}" + "</h2>");
-            $("#blog_content").append("<div class='term-desc'>" + "{{ term.desc }}" + "</div>");
+            $("#blog_content").append("<div class='term-desc'><span class='term-name'>" + "{{ term.name }}" + "</span>");
+            $("#blog_content").append("{{ term.desc }}" + "</div>");
           $("#blog_content").append("</div>");
 
         }
