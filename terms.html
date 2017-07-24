@@ -6,6 +6,15 @@ permalink: /terms/
   <input id="search_input">
 </div>
 <div id="blog_content">
+  {% for term in site.data.terms %}
+      <div class='term-wrapper'>
+        <div class='term-desc'>
+          <span class='term-name'>{{ term.name }}</span>
+          {{ term.desc }}
+        </div>
+      </div>
+  {% endfor %} 
+
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
