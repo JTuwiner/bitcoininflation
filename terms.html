@@ -39,7 +39,7 @@ permalink: /terms/
         if (s.length == 0 || name.toLowerCase().indexOf(s.toLowerCase()) >= 0) {
 
           append_html += "<div class='term-wrapper'>";
-          append_html += "<div class='term-desc'><span class='term-name'>{{ term.name }}</span><br>{{ term.desc }}</div>";
+          append_html += "<div class='term-desc'><span class='term-name'>{{ term.name }}</span>{{ term.desc }}</div>";
           append_html += "</div>";
 
         }
