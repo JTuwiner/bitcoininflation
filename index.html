@@ -7,6 +7,7 @@ title: How Many Bitcoin Users Are There?
 <div id="plotly-div" ></div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+<!--
 <script>
     var height;
     jQuery(document).ready(function($){
@@ -16,7 +17,6 @@ title: How Many Bitcoin Users Are There?
             var total_number = 12.5 * (height - 472500) + 16406250;
             var append_html = "<p>Total number of bitcoins in existence<br><span style='font-size: 6rem;font-weight: 100'>" + total_number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</span></p>";
 
-/*
             var cur_inflation = 12.5 * 144 * 365.25 / total_number * 100;
             append_html += "<br>Current Inflation: " + cur_inflation.toFixed(3) + "%";
 
@@ -25,7 +25,6 @@ title: How Many Bitcoin Users Are There?
             
             var bitcoins_remaining = 21000000 - total_number;
             append_html += "<br>Bitcoins Left to Be Mined: " + bitcoins_remaining.toFixed(1).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-*/
 
             console.log(append_html);
 
@@ -33,6 +32,14 @@ title: How Many Bitcoin Users Are There?
         });
     });
 </script>
+-->
+
+<div id="calc-content-div" style="text-align: center;"><p>Number of Bitcoin Owners<br><span style="font-size: 3rem;font-weight: 100">70,000,000</span></p></div>
+<div id="calc-content-div" style="text-align: center;"><p>Number of Daily Bitcoin Users<br><span style="font-size: 3rem;font-weight: 100">~700,000</span></p></div>
+<div id="calc-content-div" style="text-align: center;"><p>How Many Bitcoin Wallets Are There?<br><span style="font-size: 3rem;font-weight: 100">~100 million</span></p></div>
+<div id="calc-content-div" style="text-align: center;"><p>People That Know About Bitcoin<br><span style="font-size: 3rem;font-weight: 100">~2 billion</span></p></div>
+<div id="calc-content-div" style="text-align: center;"><p>Number of Bitcoin Traders<br><span style="font-size: 3rem;font-weight: 100">~53 million</span></p></div>
+
 
 <h2 class="chapter-name" id="mineddaily" class="">How Many People Own Bitcoin?</h2>
 <div class="nice-divider"></div>
@@ -48,7 +55,7 @@ title: How Many Bitcoin Users Are There?
 <p>The Bitcoin network processes about 300,000 transactions per day. This number is deceiving, since one transaction can have multiple recipients.</p>
 <p>Therefore, it's best to look at the total number of <a href="https://bitcoinvisuals.com/chain-output-count-day">outputs</a> per day. This data shows us that there are between 600,000 - 800,000 people per day, on average, receiving bitcoins on chain (excluding sidechains, Lightning, etc).</p>
 
-<p>But each transaction has a sender, too. Since there are are about 300,000 transactions per day (with one sender) and between 600,000 to 800,000 receivers, there is a maximum of 900,000 to 1.1 million people per day sending or receiving Bitcoin on-chain.</p>
+<p>But each transaction has a sender, too. Since there are are about <a href="https://www.blockchain.com/en/charts/n-transactions?daysAverageString=7">300,000 transactions per day</a> (with one sender) and between 600,000 to 800,000 receivers, there is a maximum of 900,000 to 1.1 million people per day sending or receiving Bitcoin on-chain.</p>
 
 <p>With that said, many of the senders are big exchanges, so the number of senders is likely much lower. Receivers can also receive more than one transaction per day.</p>
 
